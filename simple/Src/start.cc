@@ -13,6 +13,8 @@ int lab_id = 1;
 std::shared_ptr<Lab> lab;
 int tot_labs = 3;
 
+bool switch_lock = false;
+
 void update_lab() {
   if (lab_id == 1) {
     lab = std::make_shared<Lab1>();
@@ -38,6 +40,13 @@ void HAL_GPIO_EXTI_Callback(uint16_t pin) {
     if (HAL_GPIO_ReadPin(BTN0_GPIO_Port, BTN0_Pin) != GPIO_PIN_RESET) {
       return;
     }
+
+    if (switch_lock) {
+      return;
+    }
+
+    switch_lock = true;
+
     lab->clean_effect();
     ++lab_id;
     if (lab_id > tot_labs) {
@@ -45,6 +54,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t pin) {
     }
     update_lab();
     lab->init();
+    while (HAL_GPIO_ReadPin(BTN0_GPIO_Port, BTN0_Pin) == GPIO_PIN_RESET) {
+      soft_delay(65535);
+    }
+    switch_lock = false;
   }
 }
 }
