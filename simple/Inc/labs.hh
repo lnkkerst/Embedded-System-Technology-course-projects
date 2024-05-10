@@ -6,3 +6,6 @@
 #include "labs/lab3.hh"
 #include "labs/lab4.hh"
 #include "labs/lab5.hh"
+#include "labs/lab6.hh"
+#include "labs/lab7.hh"
+#include "labs/lab8.hh"

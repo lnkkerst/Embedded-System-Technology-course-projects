@@ -5,6 +5,7 @@
 #include "stm32f1xx_hal_tim.h"
 #include "tim.h"
 #include "utils.hh"
+#include <stdio.h>
 
 void Lab5::init() {
   count = 0;
@@ -24,6 +25,6 @@ void Lab5::clean_effect() {
 void Lab5::tim_period_elapsed_callback(TIM_HandleTypeDef *htim) {
   if (htim->Instance == htim3.Instance) {
     ++count;
-    write_number_to_led(count);
+    printf("%d \r\n", count);
   }
 }

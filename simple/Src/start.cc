@@ -12,7 +12,7 @@
 #include <memory>
 #include <vector>
 
-int lab_id = 0;
+int lab_id = 5;
 std::shared_ptr<Lab> lab = nullptr;
 std::vector<std::shared_ptr<Lab>> labs;
 
@@ -21,7 +21,8 @@ bool switch_lock = false;
 void init_labs() {
   labs = {std::make_shared<Lab1>(), std::make_shared<Lab2>(),
           std::make_shared<Lab3>(), std::make_shared<Lab4>(),
-          std::make_shared<Lab5>()};
+          std::make_shared<Lab5>(), std::make_shared<Lab6>(),
+          std::make_shared<Lab7>(), std::make_shared<Lab8>()};
 }
 
 void update_lab() {
