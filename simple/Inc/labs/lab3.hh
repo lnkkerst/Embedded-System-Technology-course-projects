@@ -10,4 +10,5 @@ public:
   void init() override;
   void run() override;
   void clean_effect() override;
+  void wkup_btn_short_click_callback() override;
 };

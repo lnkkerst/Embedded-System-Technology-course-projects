@@ -11,4 +11,6 @@ public:
   virtual void clean_effect() = 0;
 
   virtual void tim_period_elapsed_callback(TIM_HandleTypeDef *htim);
+
+  virtual void wkup_btn_short_click_callback();
 };

@@ -79,11 +79,9 @@ void Error_Handler(void);
 #define LED9_GPIO_Port GPIOF
 #define LED10_Pin GPIO_PIN_10
 #define LED10_GPIO_Port GPIOF
-#define BTN0_Pin GPIO_PIN_0
-#define BTN0_GPIO_Port GPIOC
-#define BTN0_EXTI_IRQn EXTI0_IRQn
 #define BTN_WKUP_Pin GPIO_PIN_0
 #define BTN_WKUP_GPIO_Port GPIOA
+#define BTN_WKUP_EXTI_IRQn EXTI0_IRQn
 #define LED11_Pin GPIO_PIN_11
 #define LED11_GPIO_Port GPIOF
 #define LED12_Pin GPIO_PIN_12

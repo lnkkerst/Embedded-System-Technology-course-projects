@@ -46,9 +46,27 @@ void tim_period_elapsed_callback(TIM_HandleTypeDef *htim) {
 
 extern "C" {
 void HAL_GPIO_EXTI_Callback(uint16_t pin) {
-  if (pin == BTN0_Pin) {
+  if (pin == BTN_WKUP_Pin || true) {
     soft_delay(65535);
-    if (HAL_GPIO_ReadPin(BTN0_GPIO_Port, BTN0_Pin) != GPIO_PIN_RESET) {
+    if (HAL_GPIO_ReadPin(BTN_WKUP_GPIO_Port, BTN_WKUP_Pin) != GPIO_PIN_RESET) {
+      return;
+    }
+
+    int duration = 0;
+
+    while (HAL_GPIO_ReadPin(BTN_WKUP_GPIO_Port, BTN_WKUP_Pin) ==
+           GPIO_PIN_RESET) {
+      ++duration;
+      if (duration >= 50) {
+        write_number_to_led(0xffff);
+      }
+      soft_delay(65535);
+    }
+
+    if (duration < 50) {
+      if (lab != nullptr) {
+        lab->wkup_btn_short_click_callback();
+      }
       return;
     }
 
@@ -65,9 +83,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t pin) {
     }
     update_lab();
     lab->init();
-    while (HAL_GPIO_ReadPin(BTN0_GPIO_Port, BTN0_Pin) == GPIO_PIN_RESET) {
-      soft_delay(65535);
-    }
+
     switch_lock = false;
   }
 }

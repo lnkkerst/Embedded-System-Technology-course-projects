@@ -10,15 +10,12 @@ void Lab3::init() {
 }
 
 void Lab3::run() {
-  if (HAL_GPIO_ReadPin(BTN_WKUP_GPIO_Port, BTN_WKUP_Pin) != GPIO_PIN_RESET) {
-    return;
-  }
-  ++count;
   write_number_to_led(count);
-  while (HAL_GPIO_ReadPin(BTN_WKUP_GPIO_Port, BTN_WKUP_Pin) == GPIO_PIN_RESET) {
-    HAL_Delay(100);
-  }
 }
 
 void Lab3::clean_effect() {
+}
+
+void Lab3::wkup_btn_short_click_callback() {
+  ++count;
 }
