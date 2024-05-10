@@ -1,5 +1,6 @@
-#ifndef __CPP_START_H__
-#define __CPP_START_H__
+#pragma once
+
+#include "stm32f1xx_hal.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -7,8 +8,8 @@ extern "C" {
 
 int cpp_start();
 
+void tim_period_elapsed_callback(TIM_HandleTypeDef *htim);
+
 #ifdef __cplusplus
 }
-#endif
-
 #endif

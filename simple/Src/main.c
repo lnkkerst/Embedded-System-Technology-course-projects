@@ -20,6 +20,8 @@
 #include "main.h"
 #include "cmsis_os.h"
 #include "gpio.h"
+#include "tim.h"
+#include "usart.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -90,6 +92,9 @@ int main(void) {
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_TIM3_Init();
+  MX_USART1_UART_Init();
+  MX_UART4_Init();
   /* USER CODE BEGIN 2 */
 
   cpp_start();
@@ -167,6 +172,8 @@ void SystemClock_Config(void) {
  */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   /* USER CODE BEGIN Callback 0 */
+
+  tim_period_elapsed_callback(htim);
 
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM2) {

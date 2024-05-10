@@ -5,31 +5,42 @@
 #include "stm32f1xx_hal.h"
 #include "stm32f1xx_hal_cortex.h"
 #include "stm32f1xx_hal_gpio.h"
+#include "stm32f1xx_hal_tim.h"
+#include "tim.h"
 #include "types.hh"
 #include "utils.hh"
 #include <memory>
+#include <vector>
 
-int lab_id = 1;
-std::shared_ptr<Lab> lab;
-int tot_labs = 3;
+int lab_id = 0;
+std::shared_ptr<Lab> lab = nullptr;
+std::vector<std::shared_ptr<Lab>> labs;
 
 bool switch_lock = false;
 
+void init_labs() {
+  labs = {std::make_shared<Lab1>(), std::make_shared<Lab2>(),
+          std::make_shared<Lab3>(), std::make_shared<Lab4>(),
+          std::make_shared<Lab5>()};
+}
+
 void update_lab() {
-  if (lab_id == 1) {
-    lab = std::make_shared<Lab1>();
-  } else if (lab_id == 2) {
-    lab = std::make_shared<Lab2>();
-  } else {
-    lab = std::make_shared<Lab3>();
-  }
+  lab = labs[lab_id];
 }
 
 int cpp_start() {
+  init_labs();
+
   update_lab();
   lab->init();
   while (true) {
     lab->run();
+  }
+}
+
+void tim_period_elapsed_callback(TIM_HandleTypeDef *htim) {
+  if (lab != nullptr) {
+    lab->tim_period_elapsed_callback(htim);
   }
 }
 
@@ -49,8 +60,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t pin) {
 
     lab->clean_effect();
     ++lab_id;
-    if (lab_id > tot_labs) {
-      lab_id = 1;
+    if (lab_id >= labs.size()) {
+      lab_id = 0;
     }
     update_lab();
     lab->init();

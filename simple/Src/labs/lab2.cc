@@ -5,6 +5,7 @@
 
 void Lab2::init() {
   HAL_GPIO_WritePin(LED0_GPIO_Port, 0xffff, GPIO_PIN_SET);
+  current_led = -1;
 }
 
 void Lab2::run() {
