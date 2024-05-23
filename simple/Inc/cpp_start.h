@@ -8,6 +8,9 @@ extern "C" {
 
 int cpp_start();
 
+void cpp_start_lab11_task1();
+void cpp_start_lab11_task2();
+
 void tim_period_elapsed_callback(TIM_HandleTypeDef *htim);
 
 #ifdef __cplusplus

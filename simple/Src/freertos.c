@@ -20,6 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "FreeRTOS.h"
 #include "cmsis_os.h"
+#include "cpp_start.h"
 #include "main.h"
 #include "task.h"
 
@@ -47,12 +48,19 @@
 /* USER CODE BEGIN Variables */
 
 /* USER CODE END Variables */
-/* Definitions for defaultTask */
-osThreadId_t defaultTaskHandle;
-const osThreadAttr_t defaultTask_attributes = {
-    .name = "defaultTask",
-    .stack_size = 128 * 4,
-    .priority = (osPriority_t)osPriorityNormal,
+/* Definitions for lab11_task2 */
+osThreadId_t lab11_task2Handle;
+const osThreadAttr_t lab11_task2_attributes = {
+    .name = "lab11_task2",
+    .stack_size = 512 * 4,
+    .priority = (osPriority_t)osPriorityLow,
+};
+/* Definitions for lab11_task1 */
+osThreadId_t lab11_task1Handle;
+const osThreadAttr_t lab11_task1_attributes = {
+    .name = "lab11_task1",
+    .stack_size = 512 * 4,
+    .priority = (osPriority_t)osPriorityLow,
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -60,7 +68,8 @@ const osThreadAttr_t defaultTask_attributes = {
 
 /* USER CODE END FunctionPrototypes */
 
-void StartDefaultTask(void *argument);
+void start_lab11_task2(void *argument);
+void start_lab11_task1(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -91,9 +100,13 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* creation of defaultTask */
-  defaultTaskHandle =
-      osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+  /* creation of lab11_task2 */
+  lab11_task2Handle =
+      osThreadNew(start_lab11_task2, NULL, &lab11_task2_attributes);
+
+  /* creation of lab11_task1 */
+  lab11_task1Handle =
+      osThreadNew(start_lab11_task1, NULL, &lab11_task1_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -104,20 +117,30 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_EVENTS */
 }
 
-/* USER CODE BEGIN Header_StartDefaultTask */
+/* USER CODE BEGIN Header_start_lab11_task2 */
 /**
- * @brief  Function implementing the defaultTask thread.
+ * @brief  Function implementing the lab11_task2 thread.
  * @param  argument: Not used
  * @retval None
  */
-/* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void *argument) {
-  /* USER CODE BEGIN StartDefaultTask */
-  /* Infinite loop */
-  for (;;) {
-    osDelay(1);
-  }
-  /* USER CODE END StartDefaultTask */
+/* USER CODE END Header_start_lab11_task2 */
+void start_lab11_task2(void *argument) {
+  /* USER CODE BEGIN start_lab11_task2 */
+  cpp_start_lab11_task2();
+  /* USER CODE END start_lab11_task2 */
+}
+
+/* USER CODE BEGIN Header_start_lab11_task1 */
+/**
+ * @brief Function implementing the lab11_task1 thread.
+ * @param argument: Not used
+ * @retval None
+ */
+/* USER CODE END Header_start_lab11_task1 */
+void start_lab11_task1(void *argument) {
+  /* USER CODE BEGIN start_lab11_task1 */
+  cpp_start_lab11_task1();
+  /* USER CODE END start_lab11_task1 */
 }
 
 /* Private application code --------------------------------------------------*/
