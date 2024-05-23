@@ -12,21 +12,22 @@
 #include <memory>
 #include <vector>
 
-int lab_id = 7;
+u32 lab_id = 8;
 std::shared_ptr<Lab> lab = nullptr;
-std::vector<std::shared_ptr<Lab>> labs;
+std::vector<std::shared_ptr<Lab>> lab_list;
 
 bool switch_lock = false;
 
 void init_labs() {
-  labs = {std::make_shared<Lab1>(), std::make_shared<Lab2>(),
-          std::make_shared<Lab3>(), std::make_shared<Lab4>(),
-          std::make_shared<Lab5>(), std::make_shared<Lab6>(),
-          std::make_shared<Lab7>(), std::make_shared<Lab8>()};
+  lab_list = {std::make_shared<Lab1>(), std::make_shared<Lab2>(),
+              std::make_shared<Lab3>(), std::make_shared<Lab4>(),
+              std::make_shared<Lab5>(), std::make_shared<Lab6>(),
+              std::make_shared<Lab7>(), std::make_shared<Lab8>(),
+              std::make_shared<Lab9>(), std::make_shared<Lab10>()};
 }
 
 void update_lab() {
-  lab = labs[lab_id];
+  lab = lab_list[lab_id];
 }
 
 int cpp_start() {
@@ -81,7 +82,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t pin) {
 
     lab->clean_effect();
     ++lab_id;
-    if (lab_id >= labs.size()) {
+    if (lab_id >= lab_list.size()) {
       lab_id = 0;
     }
     update_lab();
