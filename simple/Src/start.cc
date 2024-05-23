@@ -1,6 +1,8 @@
+#include "adc.h"
 #include "cmsis_os2.h"
 #include "cpp_start.h"
 #include "labs.hh"
+#include "labs/lab5.hh"
 #include "main.h"
 #include "stm32f103xe.h"
 #include "stm32f1xx_hal.h"
@@ -54,18 +56,20 @@ int cpp_start() {
 }
 
 void cpp_start_lab11_task1() {
+  int count = 0;
   while (true) {
-    printf("11\r\n");
-    osDelay(1);
+    printf("Count: %d\r\n", count);
+    count++;
+    HAL_Delay(500);
   }
 }
 
 void cpp_start_lab11_task2() {
-  int count = 0;
   while (true) {
-    write_number_to_led(count);
-    ++count;
-    osDelay(1);
+    auto ad_value = get_adc_by_average(&hadc2);
+    auto vol_value = ad_value * (3.3 / 4096);
+    write_number_to_led(int(vol_value * 1000));
+    osDelay(100);
   }
 }
 
@@ -121,11 +125,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t pin) {
     if (lab_id >= lab_list.size()) {
       lab_id = 0;
       end_round = true;
-    }
-    update_lab();
-    lab->init();
+    } else {
+      update_lab();
+      lab->init();
 
-    switch_lock = false;
+      switch_lock = false;
+    }
   }
 }
 }

@@ -17,14 +17,11 @@ void Lab10::init() {
 
 void Lab10::run() {
   if (mode == 0) {
-    printf("Count: %d\r\n", count);
-    HAL_Delay(100);
   } else {
     double ad_value = get_adc_by_average(&hadc2);
     double vol_value = ad_value * (3.3 / 4096);
     printf("Voltage: %.6lf\r\n", vol_value);
   }
-  HAL_Delay(100);
 }
 
 void Lab10::clean_effect() {
@@ -35,6 +32,9 @@ void Lab10::clean_effect() {
 void Lab10::tim_period_elapsed_callback(TIM_HandleTypeDef *htim) {
   if (htim->Instance == htim3.Instance) {
     ++count;
+    if (mode == 0) {
+      printf("Count: %d\r\n", count);
+    }
   }
 }
 
