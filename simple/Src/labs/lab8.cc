@@ -38,7 +38,7 @@ void Lab8::out() {
   if (mode == 0) {
     write_number_to_led(count);
   } else {
-    printf("%d\r\n", count);
+    printf("Count: %d\r\n", count);
   }
 }
 

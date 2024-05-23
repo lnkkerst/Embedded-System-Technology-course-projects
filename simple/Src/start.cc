@@ -12,7 +12,7 @@
 #include <memory>
 #include <vector>
 
-int lab_id = 5;
+int lab_id = 7;
 std::shared_ptr<Lab> lab = nullptr;
 std::vector<std::shared_ptr<Lab>> labs;
 
@@ -76,6 +76,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t pin) {
     }
 
     switch_lock = true;
+
+    write_number_to_led(0);
 
     lab->clean_effect();
     ++lab_id;

@@ -14,23 +14,10 @@ void Lab7::init() {
 }
 
 void Lab7::run() {
-  u32 adc_values[10];
-  auto hadc = hadc1;
-  for (int i = 0; i < 10; ++i) {
-    HAL_ADC_Start(&hadc);
-    if (HAL_ADC_PollForConversion(&hadc, 1000000) == HAL_OK) {
-      adc_values[i] = HAL_ADC_GetValue(&hadc);
-    }
-    HAL_ADC_Stop(&hadc);
-    HAL_Delay(10);
-  }
-  std::sort(adc_values, adc_values + 10);
-  int sum = 0;
-  for (int i = 2; i < 8; ++i) {
-    sum += adc_values[i];
-  }
-  write_number_to_led(sum / 6);
-  printf("%d\r\n", sum / 6);
+  auto ad_value = get_adc_by_average(&hadc1);
+  double vol_value = ad_value * (3.3 / 4096);
+  double temperature = (1.43 - vol_value) / 0.0043 + 25;
+  printf("Temperature: %.6f\r\n", temperature);
   HAL_Delay(100);
 }
 
