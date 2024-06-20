@@ -57,6 +57,20 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define IKEY0_Pin GPIO_PIN_0
+#define IKEY0_GPIO_Port GPIOG
+#define IKEY0_EXTI_IRQn EXTI0_IRQn
+#define IKEY1_Pin GPIO_PIN_1
+#define IKEY1_GPIO_Port GPIOG
+#define IKEY1_EXTI_IRQn EXTI1_IRQn
+#define IKEY2_Pin GPIO_PIN_2
+#define IKEY2_GPIO_Port GPIOG
+#define IKEY2_EXTI_IRQn EXTI2_IRQn
+#define IKEY3_Pin GPIO_PIN_3
+#define IKEY3_GPIO_Port GPIOG
+#define IKEY3_EXTI_IRQn EXTI3_IRQn
+#define DM_PWMA_Pin GPIO_PIN_15
+#define DM_PWMA_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 

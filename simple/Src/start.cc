@@ -88,7 +88,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t pin) {
     return;
   }
 
-  if (pin == BTN_WKUP_Pin || true) {
+  if (pin == BTN_WKUP_Pin) {
     soft_delay(65535);
     if (HAL_GPIO_ReadPin(BTN_WKUP_GPIO_Port, BTN_WKUP_Pin) != GPIO_PIN_RESET) {
       return;
