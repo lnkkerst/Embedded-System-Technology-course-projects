@@ -80,7 +80,7 @@ osThreadId_t steering_engineHandle;
 const osThreadAttr_t steering_engine_attributes = {
     .name = "steering_engine",
     .stack_size = 128 * 4,
-    .priority = (osPriority_t)osPriorityLow4,
+    .priority = (osPriority_t)osPriorityLow5,
 };
 
 /* Private function prototypes -----------------------------------------------*/

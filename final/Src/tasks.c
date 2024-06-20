@@ -1,3 +1,4 @@
+#include "cmsis_os2.h"
 #include "cpp_main.hh"
 
 void start_task_traffic_lights(void *args) {

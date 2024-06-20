@@ -13,8 +13,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t pin) {
   if (pin == IKEY0_Pin) {
     dc_motor_btn_callback();
   }
-  // if (pin == IKEY1_Pin) {
-  //   steering_engine_btn_callback();
-  // }
+  if (pin == IKEY1_Pin) {
+    steering_engine_btn_callback();
+  }
 }
 }

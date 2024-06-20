@@ -11,12 +11,18 @@
 #include "utils.hh"
 
 uint8_t degs[] = {0, 45, 90, 135, 180};
-uint8_t deg = 0;
+uint8_t deg = 90;
 int step = 9;
+
+void set_deg(uint8_t deg) {
+  TIM3->CCR1 = deg / 9 + 5;
+}
 
 void cpp_start_task_steering_engine() {
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+  set_deg(deg);
   while (true) {
+    osDelay(1000);
   }
 }
 
@@ -25,8 +31,8 @@ void steering_engine_btn_callback() {
     return;
   }
   deg += step;
-  if (deg == 180 || deg == 0) {
+  if (deg >= 150 || deg <= 30) {
     step = -step;
   }
-  TIM3->CCR1 = deg / 9 + 5;
+  set_deg(deg);
 }
