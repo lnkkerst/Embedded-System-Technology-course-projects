@@ -14,8 +14,12 @@ void cpp_start_task_running_lights();
 
 void cpp_start_task_dc_motor();
 
+void cpp_start_task_steering_engine();
+
 #ifdef __cplusplus
 }
 #endif
 
 void dc_motor_btn_callback();
+
+void steering_engine_btn_callback();

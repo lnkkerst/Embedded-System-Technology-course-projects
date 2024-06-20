@@ -75,6 +75,13 @@ const osThreadAttr_t dc_motor_attributes = {
     .stack_size = 128 * 4,
     .priority = (osPriority_t)osPriorityLow3,
 };
+/* Definitions for steering_engine */
+osThreadId_t steering_engineHandle;
+const osThreadAttr_t steering_engine_attributes = {
+    .name = "steering_engine",
+    .stack_size = 128 * 4,
+    .priority = (osPriority_t)osPriorityLow4,
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -85,6 +92,7 @@ void start_task_default_task(void *argument);
 void start_task_running_lights(void *argument);
 void start_task_traffic_lights(void *argument);
 void start_task_dc_motor(void *argument);
+extern void start_task_steering_engine(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -129,6 +137,10 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of dc_motor */
   dc_motorHandle = osThreadNew(start_task_dc_motor, NULL, &dc_motor_attributes);
+
+  /* creation of steering_engine */
+  steering_engineHandle = osThreadNew(start_task_steering_engine, NULL,
+                                      &steering_engine_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
