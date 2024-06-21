@@ -21,6 +21,10 @@ void cpp_start_task_steering_engine();
 
 void cpp_start_task_lcd();
 
+void cpp_start_task_adc_pot();
+
+void cpp_start_task_adc_temp();
+
 #ifdef __cplusplus
 }
 #endif

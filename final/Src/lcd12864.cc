@@ -27,7 +27,7 @@ void send_data(SEND_DATA_MODE mode, u8 data) {
   }
   send_byte(data & 0xf0);
   send_byte((data << 4) & 0xf0);
-  osDelay(10);
+  osDelay(2);
 }
 
 void send_data(u8 data) {

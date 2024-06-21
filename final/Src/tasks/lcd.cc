@@ -12,10 +12,13 @@
 
 int dc_motor_speed = 0;
 int steering_engine_deg = 0;
+double adc_pot_value = 0;
+double adc_temp_value = 0;
 
 void update_screen() {
-  char msg[64];
-  sprintf(msg, "DM: %d, SG: %d", dc_motor_speed, steering_engine_deg);
+  char msg[128];
+  sprintf(msg, "DM:%d, SG:%d\nAP:%.1f, AT:%.1f", dc_motor_speed,
+          steering_engine_deg, adc_pot_value, adc_temp_value);
   lcd12864::send_string_multiline(msg);
 }
 
@@ -33,6 +36,12 @@ void cpp_start_task_lcd() {
     }
     if (msg.source == STEERING_ENGINE) {
       steering_engine_deg = msg.data.int_value;
+    }
+    if (msg.source == ADC_POT) {
+      adc_pot_value = msg.data.float_value;
+    }
+    if (msg.source == ADC_TEMP) {
+      adc_temp_value = msg.data.float_value;
     }
     update_screen();
   }

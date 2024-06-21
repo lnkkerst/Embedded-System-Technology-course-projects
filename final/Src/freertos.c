@@ -89,6 +89,20 @@ const osThreadAttr_t lcd12864_attributes = {
     .stack_size = 128 * 4,
     .priority = (osPriority_t)osPriorityLow6,
 };
+/* Definitions for adc_pot */
+osThreadId_t adc_potHandle;
+const osThreadAttr_t adc_pot_attributes = {
+    .name = "adc_pot",
+    .stack_size = 128 * 4,
+    .priority = (osPriority_t)osPriorityLow,
+};
+/* Definitions for adc_temp */
+osThreadId_t adc_tempHandle;
+const osThreadAttr_t adc_temp_attributes = {
+    .name = "adc_temp",
+    .stack_size = 128 * 4,
+    .priority = (osPriority_t)osPriorityLow,
+};
 /* Definitions for DataUpdateQueue */
 osMessageQueueId_t DataUpdateQueueHandle;
 const osMessageQueueAttr_t DataUpdateQueue_attributes = {.name =
@@ -105,6 +119,8 @@ void start_task_traffic_lights(void *argument);
 void start_task_dc_motor(void *argument);
 extern void start_task_steering_engine(void *argument);
 extern void start_task_lcd(void *argument);
+extern void start_task_adc_pot(void *argument);
+extern void start_task_adc_temp(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -161,6 +177,12 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of lcd12864 */
   lcd12864Handle = osThreadNew(start_task_lcd, NULL, &lcd12864_attributes);
+
+  /* creation of adc_pot */
+  adc_potHandle = osThreadNew(start_task_adc_pot, NULL, &adc_pot_attributes);
+
+  /* creation of adc_temp */
+  adc_tempHandle = osThreadNew(start_task_adc_temp, NULL, &adc_temp_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
