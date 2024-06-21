@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "data_update_queue.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -82,6 +82,17 @@ const osThreadAttr_t steering_engine_attributes = {
     .stack_size = 128 * 4,
     .priority = (osPriority_t)osPriorityLow5,
 };
+/* Definitions for lcd12864 */
+osThreadId_t lcd12864Handle;
+const osThreadAttr_t lcd12864_attributes = {
+    .name = "lcd12864",
+    .stack_size = 128 * 4,
+    .priority = (osPriority_t)osPriorityLow6,
+};
+/* Definitions for DataUpdateQueue */
+osMessageQueueId_t DataUpdateQueueHandle;
+const osMessageQueueAttr_t DataUpdateQueue_attributes = {.name =
+                                                             "DataUpdateQueue"};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -93,6 +104,7 @@ void start_task_running_lights(void *argument);
 void start_task_traffic_lights(void *argument);
 void start_task_dc_motor(void *argument);
 extern void start_task_steering_engine(void *argument);
+extern void start_task_lcd(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -118,6 +130,11 @@ void MX_FREERTOS_Init(void) {
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
+  /* Create the queue(s) */
+  /* creation of DataUpdateQueue */
+  DataUpdateQueueHandle = osMessageQueueNew(16, sizeof(DataUpdateQueueItem),
+                                            &DataUpdateQueue_attributes);
+
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -141,6 +158,9 @@ void MX_FREERTOS_Init(void) {
   /* creation of steering_engine */
   steering_engineHandle = osThreadNew(start_task_steering_engine, NULL,
                                       &steering_engine_attributes);
+
+  /* creation of lcd12864 */
+  lcd12864Handle = osThreadNew(start_task_lcd, NULL, &lcd12864_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */

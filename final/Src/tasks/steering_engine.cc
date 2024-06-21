@@ -3,6 +3,7 @@
 
 #include "cmsis_os2.h"
 #include "cpp_main.hh"
+#include "data_update_queue.h"
 #include "gpio.h"
 #include "main.h"
 #include "stm32f103xe.h"
@@ -26,6 +27,16 @@ uint8_t deg = 90;
 int step = 9;
 
 /**
+ * @brief 将角度发送给 LCD 显示模块
+ */
+void send_deg() {
+  DataUpdateQueueItem msg;
+  msg.source = STEERING_ENGINE;
+  msg.data.int_value = deg;
+  osMessageQueuePut(DataUpdateQueueHandle, &msg, 0, 0);
+}
+
+/**
  * @brief 把角度转换为对应的 CCR1 值并设置
  *
  * @param deg 角度值，范围 0~180
@@ -42,6 +53,8 @@ void cpp_start_task_steering_engine() {
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   // 设置初始角度
   set_deg(deg);
+  // 更新 LCD 显示内容
+  send_deg();
   // 等待中断
   while (true) {
     osDelay(1000);
@@ -64,4 +77,5 @@ void steering_engine_btn_callback() {
   }
   // 设置角度
   set_deg(deg);
+  send_deg();
 }

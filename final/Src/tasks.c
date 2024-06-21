@@ -16,3 +16,7 @@ void start_task_dc_motor(void *args) {
 void start_task_steering_engine(void *args) {
   return cpp_start_task_steering_engine();
 }
+
+void start_task_lcd(void *args) {
+  return cpp_start_task_lcd();
+}
