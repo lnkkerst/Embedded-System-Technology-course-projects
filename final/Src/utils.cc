@@ -26,6 +26,14 @@ int btn_debounce(GPIO_TypeDef *GPIOx, uint16_t pin) {
   return true;
 }
 
+/**
+ * @brief 采集 ADC 数据
+ *
+ * @param hadc ADC 端口
+ * @param count 采集多少次
+ * @param pick 取中间多少个数据
+ * @return 采集到的平均值
+ */
 double get_adc_by_average(ADC_HandleTypeDef *hadc, int count, int pick) {
   std::vector<u32> ad_values(count);
   for (int i = 0; i < count; ++i) {
